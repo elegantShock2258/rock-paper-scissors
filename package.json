@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@textcomplete/core": "^0.1.12",
+    "@textcomplete/textarea": "^0.1.12"
+  }
+}
