@@ -41,6 +41,64 @@
     }
 }
 
+@keyframes win {
+    0%{
+        color:bisque;
+        font-size: 8em;
+    }
+    100%{
+        font-size: 9em;
+        color:greenyellow;
+    }
+}
+
+@keyframes lose {
+    0%{
+        color:bisque;
+        font-size: 8em;
+    }
+    100%{
+        font-size: 7em;
+        color:red;
+    }
+}
+
+@keyframes tie {
+    0%{
+        color:bisque;
+        
+    }
+    100%{
+        color:#303030;
+    }
+}
+
+@keyframes lose-status{
+   0%{
+        border-color:orange;
+   }
+   100%{
+        border-color:red;
+   } 
+}
+@keyframes tie-status{
+    0%{
+        border-color:orange;
+   }
+   100%{
+        border-color:#303030;
+   }    
+}
+@keyframes win-status{
+     0%{
+        border-color:orange;
+   }
+   100%{
+        border-color:greenyellow;
+   }   
+}
+
+
 
 html{
     margin :0;
@@ -85,7 +143,7 @@ p{
     font-family: 'Bebas Neue';
     font-size: 2em;
     color:cornsilk;
-    border: 1px solid greenyellow
+    border: 1px solid orange;
 }
 textarea{
     resize: none;
