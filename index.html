@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="styles.css"/>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
+
 <body>
-    <div id="parent">
-        <h1 id="main-text"> Rock Paper Scissors </h1>
-        <div class="selectionContainer" id="selectionContainer">
-            <textarea id="selection" name="selection" autocomplete="true" editable="false" autocompleteMode="true" placeholder="Enter Your Selection"></textarea>
-            <!-- <div id="dropdownContainer" class="dropdownContainer">
+    <div id="elementContainer">
+        <div class="player-counter" id="playerStatusIcon"> You 😄
+            <p id="playerHistory"></p>
+        </div>
+        <div class="computer-counter" id="computerStatusIcon"> Computer 😄
+            <p id="computerHistory"></p>
+        </div>
+        <div id="parent">
+            <h1 id="main-text"> Rock Paper Scissors </h1>
+            <div class="selectionContainer" id="selectionContainer">
+                <div class="inputContainer">
+                    <textarea id="selection" name="selection" autocomplete="true" editable="false"
+                        autocompleteMode="true" placeholder="Enter Your Selection"></textarea>
+                    <button class="menu-button" onclick="buttonOnclick()">></button>
+                </div>
+                <!-- <div id="dropdownContainer" class="dropdownContainer">
                 <span class="dropdownElement" id="rock">Rock 🪨</span>
                 <span class="dropdownElement" id="paper">Paper 📝</span>
                 <span class="dropdownElement" id="scissors">Scissors ✂️</span>
             </div> -->
+            </div>
+            <!-- add different status for this -->
+            <p id="status"> </p>
         </div>
-        <!-- add different status for this -->
-        <p id="status"> </p>
     </div>
-    <script type="text/javascript" src="index.js"/>
+    <script type="text/javascript" src="index.js" />
 </body>
+
 </html>

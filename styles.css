@@ -19,6 +19,27 @@
         opacity: 1;
     }
 }
+@keyframes fadeInBlack {
+    0%{
+        opacity: 0;
+        background-color:transparent;
+    }
+
+    100%{
+        opacity: 0.8;
+        background-color:black;
+    }
+}
+@keyframes headerStreakAnim {
+    0%{
+        color:bisque;
+    }
+
+    100%{
+        color:azure;
+    }
+}
+
 @keyframes fadeOut {
     0%{
         opacity: 1;
@@ -45,9 +66,11 @@
     0%{
         color:bisque;
         font-size: 8em;
+        border: transparent solid 5px; 
     }
     100%{
         font-size: 9em;
+        border: #909090 solid 20px; 
         color:greenyellow;
     }
 }
@@ -56,20 +79,23 @@
     0%{
         color:bisque;
         font-size: 8em;
+        border: transparent solid 5px; 
     }
     100%{
         font-size: 7em;
         color:red;
+        border: #909090 solid 20px; 
     }
 }
 
 @keyframes tie {
     0%{
         color:bisque;
-        
+        border: transparent solid 5px; 
     }
     100%{
         color:#303030;
+        border: #909090 solid 20px; 
     }
 }
 
@@ -135,6 +161,13 @@ h1{
     font-family: 'IntroScript', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: bisque;
     font-size: 8em; 
+    transition: color 1s ease-in-out;
+    border: transparent solid 5px; 
+    padding: 15px;
+    border-radius: 40px;
+}
+h1:hover{
+    color:azure;
 }
 p{
     padding: 10px;
@@ -173,6 +206,46 @@ span{
     width:80%;
     z-index: 1;
     padding: 10px;
+}
+.inputContainer{
+    display: flex;
+    align-items:center;
+    flex-direction: row;
+}
+.menu-button{ 
+    /* ADD SOME HOVER ACTION */
+    padding: 10px;
+    background-color:#606060;
+    border: #505050 solid 5px;
+    border-radius: 10px;
+    font-family: 'Bebas Neue';
+    width: 70px;
+    height: 70px;
+    font-size: 2.5em;
+    color:bisque;
+}
+.player-counter,.computer-counter{
+    padding: 20px;
+    font-family: 'Bebas Neue';
+    align-self: flex-start;
+    color:bisque;
+    font-size: xx-large;
+    display: flexbox;
+}
+.computer-counter{
+    position: absolute;
+    top:0;
+    right: 0;
+}
+.player-counter{
+    position: absolute;
+    top:0;
+    left: 0;
+}
 
-    /* animation: fadeIn ease 1.4s */
+#elementContainer{
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding:0;
 }

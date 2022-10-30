@@ -4,9 +4,28 @@ let options = ["Rock 🪨", "Paper 📝", "Scissors ✂️"]
 let textarea = document.getElementById('selection')
 let statusElement = document.getElementById("status")
 let isDrawer = false;
-const typingThreshold = 10000
+let playerCounter = document.getElementById("playerScore")
+let computerCounter = document.getElementById("computerScore")
+let elementContainer = document.getElementById("elementContainer")
+let header = document.getElementById("main-text")
+let menuButton = document.getElementById("menu-button")
+
+let playerStatus = 0;
+let computerStatus = 0;
+let statusIconsWin = ["😀", "😃", "😄", "😁", "😆", "😊", "😉", "😎"]
+let statusIconLose = ["🙂", "🙃", "🫠", "🥲", "🤫", "😐", "😑", "😬", "😶", "🫡", "🤨", "😒", "😔"]
+let playerStatusIcon = document.getElementById("playerStatusIcon")
+let computerStatusIcon = document.getElementById("computerStatusIcon")
+
+//for streaks
+let streakCounter = 0;   // every 3
+let afterStreakStatusIcon = ["🤩", "✨", "❤️", "💖", "💕", "💓"]
+
+let playerSelectionHistory = []
+let computerSelectionHistory = []
 
 
+let typingThreshold = 100000;
 let typingTimer = setTimeout(removeSelectionDrawer, typingThreshold);
 let statuses = ["Dont Be shy!!!", "Oh come on, you didn't start this to stare at the screen did you?"]
 
@@ -14,11 +33,9 @@ let statuses = ["Dont Be shy!!!", "Oh come on, you didn't start this to stare at
 let parent = document.getElementById("selectionContainer");
 let dropdownContainer = document.createElement("div");
 
-//TODO: add a sepereate button
-//      also add a section to show the computer's choice
-//      what if when u win the screen fades and there's an animation for the two choices coming togeather??????? ( what if u win in a certain streak??)
-//      add score mechanism
-//      add highscore mechanism
+//TODO: 
+//      add a sort of history something with a list of the emojis of the past selections
+
 
 
 function addSelectionDrawer() {
@@ -34,8 +51,8 @@ function addSelectionDrawer() {
         dropdownElement.id = options[i].substring(0, options[i].indexOf(" ")).toLocaleLowerCase();
 
         dropdownElement.addEventListener("click", (event) => {
-             textarea.value = dropdownElement.textContent
-             // for the drawer 
+            textarea.value = dropdownElement.textContent
+            // for the drawer 
             clearTimeout(typingTimer);
             typingTimer = setTimeout(removeSelectionDrawer, typingThreshold);
         })
@@ -43,7 +60,7 @@ function addSelectionDrawer() {
         dropdownContainer.appendChild(dropdownElement);
     }
 
-    animationInitialise(dropdownContainer,"fadeIn ease 1.4s")
+    animationInitialise(dropdownContainer, "fadeIn ease 1.4s")
     parent.appendChild(dropdownContainer);
     isDrawer = true;
 }
@@ -53,7 +70,7 @@ function startUp() {
     statusElement.textContent = statuses[randomNumber % statuses.length]
 
     textarea.addEventListener("click", (event) => {
-        if(isDrawer) { 
+        if (isDrawer) {
             removeSelectionDrawer()
             isDrawer = false
         } else {
@@ -63,7 +80,7 @@ function startUp() {
     })
 
     textarea.addEventListener("keydown", (event) => {
-        if(event.keyCode === 13) {
+        if (event.keyCode === 13) {
             event.preventDefault();
             runGame()
         }
@@ -74,7 +91,7 @@ function removeSelectionDrawer() {
         dropdownContainer.style.animation = "fadeOut ease 0.3s"
         dropdownContainer.classList.add("update")
     }, 300)
-    animationInitialise(dropdownContainer,"fadeOut ease 0.3s")
+    animationInitialise(dropdownContainer, "fadeOut ease 0.3s")
     parent.addEventListener("animationend", () => {
         parent.removeChild(dropdownContainer);
         isDrawer = false;
@@ -87,38 +104,84 @@ function runGame() {
     computerSelection = randomNumber % 3
     let userSelection = options.indexOf(textarea.value.trim())
 
-    let winScenarios = [ "0,2" , "1,0" , "2,1"] // (userSelection,computerSelection)
+    let playerHistory = document.getElementById("playerHistory")
+    playerHistory.innerText = playerHistory.innerText + textarea.value.trim().substring(textarea.value.trim().length - 1)
+
+    let computerHistory = document.getElementById("playerHistory")
+    computerHistory.innerText = computerHistory.innerText + options[computerSelection].substring(options[computerSelection].length - 1)
+
+    let winScenarios = ["0,2", "1,0", "2,1"] // (userSelection,computerSelection)
     // rock = 0
     // paper = 1
     // scissors = 2
-    if(winScenarios.includes(userSelection+","+computerSelection))
-        concludeGame("you Win!","win")
-    else if(userSelection === computerSelection)
-        concludeGame("it's a tie","tie")
-    else 
-        concludeGame("you Lose!","lose")
-    computerSelection = Math.floor(100* Math.random()) % 3
+    if (winScenarios.includes(userSelection + "," + computerSelection)) {
+        streakCounter++;
+        playerStatusIcon.innerHTML = "You " + statusIconsWin[Math.floor(100 * Math.random() % (statusIconsWin.length))]
+        computerStatusIcon.innerHTML = "Computer " + statusIconLose[Math.floor(100 * Math.random() % (statusIconLose.length))]
+        if (streakCounter === 3) streakDone()
+        concludeGame("you Win!", "win")
+    } else if (userSelection === computerSelection) {
+        computerStatusIcon.innerHTML = "Computer " + statusIconLose[0]
+        playerStatusIcon.innerHTML = "You " + statusIconLose[0]
+        streakCounter = 0;
+
+        concludeGame("it's a tie", "tie")
+    } else {
+        computerStatusIcon.innerHTML = "Computer " + statusIconsWin[Math.floor(100 * Math.random() % (statusIconsWin.length))]
+        playerStatusIcon.innerHTML = "You " + statusIconLose[Math.floor(100 * Math.random() % (statusIconLose.length))]
+        streakCounter = 0;
+        concludeGame("you Lose!", "lose")
+    }
+    computerSelection = Math.floor(100 * Math.random()) % 3
     console.log("new selection: " + options[computerSelection])
     textarea.value = ""
 }
-let animationTime = "0.7s"
-function concludeGame(statusString,animationName) {
-    console.log(statusString, textarea.value , options[computerSelection]) 
-    let animationStr = `${animationName} ease-in ${animationTime} 2 alternate`;
-    let header = document.getElementById("main-text")
-    
-    animationInitialise(header,animationStr);
-    
-    let status = document.getElementById("status")
-    status.innerText = statusString 
-    
-    animationInitialise(status,`${animationName}-status ease-in ${animationTime} 2 alternate`);
+function streakDone() {
+    //do animation
+
+    animationInitialise(elementContainer, `fadeInBlack ease-in-out ${animationTime}s 1`)
+    elementContainer.style.backgroundColor = "black";
+
+    streakWhiteText(header)
+    streakWhiteText(playerStatusIcon);
+    streakWhiteText(computerStatusIcon)
+    streakWhiteText(statusElement)
+    streakWhiteText(textarea)
+    // move #parent up till 15px!
+
+
+    computerStatusIcon.innerHTML = "Computer " + afterStreakStatusIcon[Math.floor(100 * Math.random() % (afterStreakStatusIcon.length))]
+    playerStatusIcon.innerHTML = "You " + afterStreakStatusIcon[Math.floor(100 * Math.random() % (afterStreakStatusIcon.length))]
+
+    streakCounter = 0
 }
-function animationInitialise(status,animationStr) {
+function streakWhiteText(element) {
+    animationInitialise(element, `headerStreakAnim ease-in-out ${animationTime}s 1`);
+    element.style.webkitTextFillColor = "azure";
+    element.style.color = "azure";
+}
+
+function buttonOnclick() {
+    if (textarea.value != "") {
+        removeSelectionDrawer()
+        setTimeout(runGame, 500)
+    }
+}
+let animationTime = 0.7
+function concludeGame(statusString, animationName) {
+    console.log(statusString, textarea.value, options[computerSelection])
+    let animationStr = `${animationName} ease-in-out ${animationTime}s 2 alternate`;
+    console.log(animationStr)
+    let header = document.getElementById("main-text")
+    animationInitialise(header, animationStr);
+
+    statusElement.innerText = statusString
+
+    animationInitialise(statusElement, `${animationName}-status ease-in-out ${animationTime}s 2 alternate`);
+}
+function animationInitialise(status, animationStr) {
     status.style.animation = 'none';
     status.style.animation = null;
     setTimeout(() => { status.style.animation = animationStr });
 }
 startUp()
-
-setTimeout(winGame,2000)
