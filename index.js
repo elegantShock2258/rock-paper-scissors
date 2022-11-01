@@ -104,32 +104,27 @@ function runGame() {
     computerSelection = randomNumber % 3
     let userSelection = options.indexOf(textarea.value.trim())
 
-    let playerHistory = document.getElementById("playerHistory")
-    playerHistory.innerText = playerHistory.innerText + textarea.value.trim().substring(textarea.value.trim().length - 1)
-
-    let computerHistory = document.getElementById("playerHistory")
-    computerHistory.innerText = computerHistory.innerText + options[computerSelection].substring(options[computerSelection].length - 1)
-
     let winScenarios = ["0,2", "1,0", "2,1"] // (userSelection,computerSelection)
     // rock = 0
     // paper = 1
     // scissors = 2
     if (winScenarios.includes(userSelection + "," + computerSelection)) {
         streakCounter++;
-        playerStatusIcon.innerHTML = "You " + statusIconsWin[Math.floor(100 * Math.random() % (statusIconsWin.length))]
+        playerStatusIcon.innerHTML = "You " + statusIconsWin[Math.floor(100 * Math.random() % (statusIconsWin.length))] 
         computerStatusIcon.innerHTML = "Computer " + statusIconLose[Math.floor(100 * Math.random() % (statusIconLose.length))]
         if (streakCounter === 3) streakDone()
         concludeGame("you Win!", "win")
     } else if (userSelection === computerSelection) {
-        computerStatusIcon.innerHTML = "Computer " + statusIconLose[0]
+        computerStatusIcon.innerHTML = "Computer " + statusIconLose[0] 
         playerStatusIcon.innerHTML = "You " + statusIconLose[0]
         streakCounter = 0;
-
+        streakBroke()
         concludeGame("it's a tie", "tie")
     } else {
         computerStatusIcon.innerHTML = "Computer " + statusIconsWin[Math.floor(100 * Math.random() % (statusIconsWin.length))]
         playerStatusIcon.innerHTML = "You " + statusIconLose[Math.floor(100 * Math.random() % (statusIconLose.length))]
         streakCounter = 0;
+        streakBroke()
         concludeGame("you Lose!", "lose")
     }
     computerSelection = Math.floor(100 * Math.random()) % 3
@@ -137,29 +132,49 @@ function runGame() {
     textarea.value = ""
 }
 function streakDone() {
-    //do animation
 
-    animationInitialise(elementContainer, `fadeInBlack ease-in-out ${animationTime}s 1`)
+    animationInitialise(elementContainer, `fadeInBlack ease-in-out 1.5s 1`)
     elementContainer.style.backgroundColor = "black";
 
     streakWhiteText(header)
     streakWhiteText(playerStatusIcon);
     streakWhiteText(computerStatusIcon)
     streakWhiteText(statusElement)
+    streakWhiteText(statusElement)
     streakWhiteText(textarea)
-    // move #parent up till 15px!
-
+    streakWhiteText(menuButton)
 
     computerStatusIcon.innerHTML = "Computer " + afterStreakStatusIcon[Math.floor(100 * Math.random() % (afterStreakStatusIcon.length))]
     playerStatusIcon.innerHTML = "You " + afterStreakStatusIcon[Math.floor(100 * Math.random() % (afterStreakStatusIcon.length))]
 
     streakCounter = 0
 }
-function streakWhiteText(element) {
-    animationInitialise(element, `headerStreakAnim ease-in-out ${animationTime}s 1`);
-    element.style.webkitTextFillColor = "azure";
-    element.style.color = "azure";
+function streakBroke() {
+
+    animationInitialise(elementContainer, `fadeInBlack ease-in-out ${animationTime}s reverse`)
+    elementContainer.style.backgroundColor = "#303030";
+    setTimeout(()=>{  
+        streakWhiteReverse(header)
+        streakWhiteReverse(playerStatusIcon);
+        streakWhiteReverse(computerStatusIcon)
+        streakWhiteReverse(statusElement)
+        streakWhiteReverse(textarea)
+        streakWhiteReverse(menuButton)
+    },animationTime)
+    streakCounter = 0
 }
+
+function streakWhiteText(element) {
+    animationInitialise(element, `headerstreakanim ease-in-out ${animationTime}s 1`);
+    element.style.color = "azure";
+    console.log(element.style)
+}
+function streakWhiteReverse(element) {
+    animationInitialise(element, `headerStreakAnim ease-in-out ${animationTime}s reverse`);
+    element.style.color = "bisque"
+    console.log(element.style)
+}
+
 
 function buttonOnclick() {
     if (textarea.value != "") {

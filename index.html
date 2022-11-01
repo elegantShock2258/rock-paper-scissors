@@ -5,18 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rock Paper Scissors</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 
 <body>
-    <script type="text/javascript" src="index.js" ></script>
     <div id="elementContainer">
-        <div class="player-counter" id="playerStatusIcon"> You 😄
-            <!-- <p id="playerHistory"></p> -->
+        <div class="player-counter" id="playerStatusIcon"> You 😄 
         </div>
-        <div class="computer-counter" id="computerStatusIcon"> Computer 😄
-            <!-- <p id="computerHistory"></p> -->
+        <div class="computer-counter" id="computerStatusIcon"> Computer 😄 
         </div>
         <div id="parent">
             <h1 id="main-text"> Rock Paper Scissors </h1>
@@ -24,7 +21,7 @@
                 <div class="inputContainer">
                     <textarea id="selection" name="selection" autocomplete="true" editable="false"
                         autocompleteMode="true" placeholder="Enter Your Selection"></textarea>
-                    <button class="menu-button" onclick="buttonOnclick()">></button>
+                    <button class="menu-button" id= "menu-button" onclick="buttonOnclick()">></button>
                 </div>
                 <!-- <div id="dropdownContainer" class="dropdownContainer">
                 <span class="dropdownElement" id="rock">Rock 🪨</span>
@@ -36,6 +33,7 @@
             <p id="status"> </p>
         </div>
     </div>
+    <script type="text/javascript" src="index.js" ></script>
 </body>
 
 </html>
