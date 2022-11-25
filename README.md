@@ -2,4 +2,9 @@
 
 just a rock paper scissors project
 
-<!-- TODO: list features and add ss  -->
+## Gameplay
+<![alt](Assets/gameplay.png)>
+
+## Streaks 
+
+![alt](Assets/streaks.png)
