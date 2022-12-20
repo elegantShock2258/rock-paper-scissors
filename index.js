@@ -118,13 +118,13 @@ function runGame() {
         computerStatusIcon.innerHTML = "Computer " + statusIconLose[0] 
         playerStatusIcon.innerHTML = "You " + statusIconLose[0]
         streakCounter = 0;
-        streakBroke()
+        if (streakCounter === 3) streakBroke()
         concludeGame("it's a tie", "tie")
     } else {
         computerStatusIcon.innerHTML = "Computer " + statusIconsWin[Math.floor(100 * Math.random() % (statusIconsWin.length))]
         playerStatusIcon.innerHTML = "You " + statusIconLose[Math.floor(100 * Math.random() % (statusIconLose.length))]
         streakCounter = 0;
-        streakBroke()
+        if (streakCounter === 3) streakBroke()
         concludeGame("you Lose!", "lose")
     }
     computerSelection = Math.floor(100 * Math.random()) % 3
